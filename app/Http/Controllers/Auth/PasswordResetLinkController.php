@@ -11,8 +11,6 @@ use Illuminate\Validation\ValidationException;
 class PasswordResetLinkController extends Controller
 {
     /**
-     * Handle an incoming password reset link request.
-     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): JsonResponse
