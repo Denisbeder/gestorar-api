@@ -12,6 +12,7 @@ class AuthenticatedSessionController extends Controller
 {
     public function store(LoginRequest $request): Response
     {
+        //abort(400, 'FALHOU!');
         $request->authenticate();
 
         $request->session()->regenerate();
