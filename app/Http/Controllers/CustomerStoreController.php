@@ -6,15 +6,14 @@ use App\Enums\CustomerTypeEnum;
 use App\Http\Requests\CustomerStoreRequest;
 use App\Models\People;
 use Illuminate\Http\Response;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class CustomerStoreController extends Controller
 {
-    public function __invoke(CustomerStoreRequest $request)
+    public function __invoke(CustomerStoreRequest $request): Response
     {
         DB::transaction(function () use ($request) {
-            match ($request->validated('type')) {
+            match ($request->validated('customer_type')) {
                 CustomerTypeEnum::CPF->value => $this->createPeopleCustomer($request->validated()),
                 CustomerTypeEnum::CNPJ->value => $this->createCompanyCustomer($request->validated()),
             };
