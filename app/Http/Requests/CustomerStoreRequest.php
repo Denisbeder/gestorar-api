@@ -18,22 +18,22 @@ class CustomerStoreRequest extends FormRequest
         $typeCNPJ = CustomerTypeEnum::CNPJ->value;
 
         return [
-            'customer_type' => ['required', Rule::enum(CustomerTypeEnum::class)],
+            'type' => ['required', Rule::enum(CustomerTypeEnum::class)],
 
             // Person
-            'first_name' => ["exclude_unless:customer_type,{$typeCPF}", 'string', 'max:50'],
-            'last_name' => ["exclude_unless:customer_type,{$typeCPF}", 'sometimes', 'nullable', 'string', 'max:100'],
-            'cpf' => ["exclude_unless:customer_type,{$typeCPF}", 'sometimes', 'nullable', 'numeric', 'digits:11'],
+            'first_name' => ["exclude_unless:type,{$typeCPF}", 'string', 'max:50'],
+            'last_name' => ["exclude_unless:type,{$typeCPF}", 'sometimes', 'nullable', 'string', 'max:100'],
+            'cpf' => ["exclude_unless:type,{$typeCPF}", 'sometimes', 'nullable', 'numeric', 'digits:11'],
 
             // Company
-            'name' => ["exclude_unless:customer_type,{$typeCNPJ}", 'required', 'string', 'max:180'],
-            'legal_name' => ["exclude_unless:customer_type,{$typeCNPJ}", 'sometimes', 'nullable', 'string', 'max:100'],
-            'cnpj' => ["exclude_unless:customer_type,{$typeCNPJ}", 'sometimes', 'nullable', 'numeric', 'digits:14'],
+            'name' => ["exclude_unless:type,{$typeCNPJ}", 'required', 'string', 'max:180'],
+            'legal_name' => ["exclude_unless:type,{$typeCNPJ}", 'sometimes', 'nullable', 'string', 'max:100'],
+            'cnpj' => ["exclude_unless:type,{$typeCNPJ}", 'sometimes', 'nullable', 'numeric', 'digits:14'],
 
             // Common
             'addresses' => ['sometimes', 'array'],
             'addresses.*.type' => ['sometimes', 'required', 'in:home,commercial,billing'],
-            'addresses.*.zip_code' => ['sometimes', 'nullable', 'number', 'max:8'],
+            'addresses.*.zipcode' => ['sometimes', 'nullable', 'numeric', 'min:8'],
             'addresses.*.street' => ['sometimes', 'required', 'string', 'max:100'],
             'addresses.*.number' => ['sometimes', 'required', 'string', 'max:10'],
             'addresses.*.neighborhood' => ['sometimes', 'required', 'string', 'max:50'],

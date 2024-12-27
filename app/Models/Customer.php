@@ -2,35 +2,28 @@
 
 namespace App\Models;
 
-use App\Enums\AddressTypeEnum;
+use App\Enums\CustomerTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Address extends Model
+class Customer extends Model
 {
-    /** @use HasFactory<\Database\Factories\AddressFactory> */
+    /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
 
     protected $fillable = [
         'type',
-        'zipcode',
-        'street',
-        'number',
-        'neighborhood',
-        'city',
-        'state',
-        'complement',
     ];
 
     protected function casts(): array
     {
         return [
-            'type' => AddressTypeEnum::class,
+            'type' => CustomerTypeEnum::class,
         ];
     }
 
-    public function addressable(): MorphTo
+    public function customerable(): MorphTo
     {
         return $this->morphTo();
     }

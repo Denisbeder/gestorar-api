@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->morphs('addressable');
             $table->enum('type', ['home', 'commercial', 'billing'])->default('commercial');
-            $table->unsignedBigInteger('zip_code')->nullable();
+            $table->unsignedBigInteger('zipcode')->nullable();
             $table->string('street');
             $table->string('number');
             $table->string('neighborhood');

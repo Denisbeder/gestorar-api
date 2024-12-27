@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class People extends Model
+class Organization extends Model
 {
-    /** @use HasFactory<\Database\Factories\PeopleFactory> */
+    /** @use HasFactory<\Database\Factories\OrganizationFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'cpf',
+        'name',
+        'legal_name',
+        'cnpj',
     ];
 
     public function addresses(): MorphMany

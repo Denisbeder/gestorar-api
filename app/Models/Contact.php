@@ -2,35 +2,30 @@
 
 namespace App\Models;
 
-use App\Enums\AddressTypeEnum;
+use App\Enums\ContactTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Address extends Model
+class Contact extends Model
 {
-    /** @use HasFactory<\Database\Factories\AddressFactory> */
+    /** @use HasFactory<\Database\Factories\ContactFactory> */
     use HasFactory;
 
     protected $fillable = [
         'type',
-        'zipcode',
-        'street',
-        'number',
-        'neighborhood',
-        'city',
-        'state',
-        'complement',
+        'value',
+        'description',
     ];
 
     protected function casts(): array
     {
         return [
-            'type' => AddressTypeEnum::class,
+            'type' => ContactTypeEnum::class,
         ];
     }
 
-    public function addressable(): MorphTo
+    public function contactable(): MorphTo
     {
         return $this->morphTo();
     }
