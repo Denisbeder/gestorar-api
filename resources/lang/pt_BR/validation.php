@@ -191,6 +191,25 @@ return [
     */
 
     'attributes' => [
+        'addresses'   => [
+            [
+                'type' => 'tipo',
+                'zipcode' => 'cep',
+                'street' => 'rua',
+                'number' => 'número',
+                'neighborhood' => 'bairro',
+                'city' => 'cidade',
+                'state' => 'state',
+                'complement' => 'complemento',
+            ],
+        ],
+        'contacts'   => [
+            [
+                'type' => 'tipo',
+                'value' => 'valor',
+                'description' => 'descrição',
+            ],
+        ],
         'address'   => 'endereço',
         'age'       => 'idade',
         'body'      => 'conteúdo',

@@ -25,7 +25,7 @@ class CustomerStoreController extends Controller
 
     private function createPeopleCustomer(array $inputs): void
     {
-        $people = People::query()->create( [
+        $people = People::query()->create([
             'first_name' => data_get($inputs, 'first_name'),
             'last_name' => data_get($inputs, 'last_name'),
             'cpf' => data_get($inputs, 'cpf'),

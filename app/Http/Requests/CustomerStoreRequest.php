@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\AddressTypeEnum;
+use App\Enums\ContactTypeEnum;
 use App\Enums\CustomerTypeEnum;
+use App\Models\Contact;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -32,8 +35,8 @@ class CustomerStoreRequest extends FormRequest
 
             // Common
             'addresses' => ['sometimes', 'array'],
-            'addresses.*.type' => ['sometimes', 'required', 'in:home,commercial,billing'],
-            'addresses.*.zipcode' => ['sometimes', 'nullable', 'numeric', 'min:8'],
+            'addresses.*.type' => ['sometimes', 'required', Rule::enum(AddressTypeEnum::class)],
+            'addresses.*.zipcode' => ['sometimes', 'nullable', 'numeric', 'digits:8'],
             'addresses.*.street' => ['sometimes', 'required', 'string', 'max:100'],
             'addresses.*.number' => ['sometimes', 'required', 'string', 'max:10'],
             'addresses.*.neighborhood' => ['sometimes', 'required', 'string', 'max:50'],
@@ -43,7 +46,7 @@ class CustomerStoreRequest extends FormRequest
 
             'contacts' => ['sometimes', 'array'],
             'contacts.*.value' => ['sometimes', 'required', 'string', 'max:180'],
-            'contacts.*.type' => ['sometimes', 'nullable', 'in:email,phone'],
+            'contacts.*.type' => ['sometimes', 'nullable', Rule::enum(ContactTypeEnum::class)],
 
         ];
     }
