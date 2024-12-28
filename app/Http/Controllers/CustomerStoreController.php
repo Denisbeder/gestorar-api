@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract\CustomerContract;
 use App\Enums\CustomerTypeEnum;
 use App\Http\Requests\CustomerStoreRequest;
 use App\Models\Organization;
@@ -31,7 +32,8 @@ class CustomerStoreController extends Controller
             'cpf' => data_get($inputs, 'cpf'),
         ]);
 
-        $this->create($people, $inputs);
+        $this->createAddressesContacts($people, $inputs);
+        $this->createCustomer($people, $inputs);
     }
 
     private function createOrganizationCustomer(array $inputs): void
@@ -43,13 +45,19 @@ class CustomerStoreController extends Controller
             'cnpj' => data_get($inputs, 'cnpj'),
         ]);
 
-        $this->create($organization, $inputs);
+        $this->createAddressesContacts($organization, $inputs);
+        $this->createCustomer($organization, $inputs);
     }
 
-    private function create(People | Organization $relationship, array $inputs): void
+    private function createAddressesContacts(People | Organization $relationship, array $inputs): void
     {
+        info(data_get($inputs, 'contacts'));
         $relationship->addresses()->createMany(data_get($inputs, 'addresses'));
         $relationship->contacts()->createMany(data_get($inputs, 'contacts'));
+    }
+
+    private function createCustomer(CustomerContract $relationship, array $inputs): void
+    {
         $relationship->customer()->create(['type' => data_get($inputs, 'type')]);
     }
 }

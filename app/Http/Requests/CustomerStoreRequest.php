@@ -5,12 +5,22 @@ namespace App\Http\Requests;
 use App\Enums\AddressTypeEnum;
 use App\Enums\ContactTypeEnum;
 use App\Enums\CustomerTypeEnum;
-use App\Models\Contact;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Fluent;
 use Illuminate\Validation\Rule;
 
 class CustomerStoreRequest extends FormRequest
 {
+    public function prepareForValidation(): void
+    {
+        $validator = $this->getValidatorInstance();
+        $phoneRegex = config('phone.regex');
+
+        $validator->sometimes('contacts.*.value', 'email', fn (Fluent $input, Fluent $item) => $item->type === 'email');
+
+        $validator->sometimes('contacts.*.value', "regex:{$phoneRegex}", fn (Fluent $input, Fluent $item) => $item->type === 'phone');
+    }
+
     public function authorize(): bool
     {
         return auth()->check();
@@ -19,6 +29,8 @@ class CustomerStoreRequest extends FormRequest
     {
         $typeCPF = CustomerTypeEnum::CPF->value;
         $typeCNPJ = CustomerTypeEnum::CNPJ->value;
+
+
 
         return [
             'type' => ['required', Rule::enum(CustomerTypeEnum::class)],
@@ -45,9 +57,10 @@ class CustomerStoreRequest extends FormRequest
             'addresses.*.complement' => ['sometimes', 'nullable', 'string', 'max:100'],
 
             'contacts' => ['sometimes', 'array'],
-            'contacts.*.value' => ['sometimes', 'required', 'string', 'max:180'],
             'contacts.*.type' => ['sometimes', 'nullable', Rule::enum(ContactTypeEnum::class)],
-
+            'contacts.*.value' => ['sometimes', 'string', 'required', 'max:180'],
+            'contacts.*.description' => ['sometimes', 'nullable', 'string', 'max:50'],
+            'contacts.*.properties' => ['sometimes', 'nullable', 'array'],
         ];
     }
 }

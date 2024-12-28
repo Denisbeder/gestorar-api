@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Contract\CustomerContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class People extends Model
+class People extends Model implements CustomerContract
 {
     /** @use HasFactory<\Database\Factories\PeopleFactory> */
     use HasFactory;

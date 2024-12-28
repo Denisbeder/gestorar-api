@@ -14,6 +14,7 @@ return new class extends Migration
             $table->enum('type', ['email', 'phone']);
             $table->string('value');
             $table->string('description')->nullable();
+            $table->json('properties')->nullable();
             $table->timestamps();
         });
     }

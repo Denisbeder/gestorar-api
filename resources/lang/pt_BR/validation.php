@@ -192,7 +192,7 @@ return [
 
     'attributes' => [
         'addresses'   => [
-            [
+            '*' => [
                 'type' => 'tipo',
                 'zipcode' => 'cep',
                 'street' => 'rua',
@@ -204,7 +204,7 @@ return [
             ],
         ],
         'contacts'   => [
-            [
+            '*' => [
                 'type' => 'tipo',
                 'value' => 'valor',
                 'description' => 'descrição',

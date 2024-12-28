@@ -16,12 +16,14 @@ class Contact extends Model
         'type',
         'value',
         'description',
+        'properties',
     ];
 
     protected function casts(): array
     {
         return [
             'type' => ContactTypeEnum::class,
+            'properties' => 'collection',
         ];
     }
 

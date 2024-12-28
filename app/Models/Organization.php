@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class Organization extends Model
+class Organization extends Model implements CustomerContract
 {
     /** @use HasFactory<\Database\Factories\OrganizationFactory> */
     use HasFactory;
