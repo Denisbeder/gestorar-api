@@ -13,7 +13,7 @@ class CustomerUpdateController
     {
         $inputs = $request->all();
 
-        $attributes = match ($customer->type->value) {
+        $addressAttributes = match ($customer->type->value) {
             CustomerTypeEnum::CPF->value =>[
                 'first_name' => data_get($inputs, 'first_name'),
                 'last_name' => data_get($inputs, 'last_name'),
@@ -26,34 +26,38 @@ class CustomerUpdateController
             ],
         };
 
-        $customer->customerable->update($attributes);
+        $customer->customerable->update($addressAttributes);
 
         foreach (data_get($inputs, 'addresses') as $address) {
-            $customer->customerable
-                ->addresses()
-                ->where('id', data_get($address, 'id'))
-                ->update([
-                    'type' => data_get($address, 'type'),
-                    'zipcode' => data_get($address, 'zipcode'),
-                    'street' => data_get($address, 'street'),
-                    'number' => data_get($address, 'number'),
-                    'neighborhood' => data_get($address, 'neighborhood'),
-                    'city' => data_get($address, 'city'),
-                    'state' => data_get($address, 'state'),
-                    'complement' => data_get($address, 'complement'),
-                ]);
+            $addressAttributes = [
+                'id' => data_get($address, 'id'),
+                'type' => data_get($address, 'type'),
+                'zipcode' => data_get($address, 'zipcode'),
+                'street' => data_get($address, 'street'),
+                'number' => data_get($address, 'number'),
+                'neighborhood' => data_get($address, 'neighborhood'),
+                'city' => data_get($address, 'city'),
+                'state' => data_get($address, 'state'),
+                'complement' => data_get($address, 'complement'),
+                'addressable_type' => data_get($address, 'addressable_type'),
+                'addressable_id' => data_get($address, 'addressable_id'),
+            ];
+
+            $customer->customerable->addresses()->upsert($addressAttributes, $addressAttributes);
         }
 
         foreach (data_get($inputs, 'contacts') as $contact) {
-            $customer->customerable
-                ->contacts()
-                ->where('id', data_get($contact, 'id'))
-                ->update([
-                    'type' => data_get($contact, 'type'),
-                    'value' => data_get($contact, 'value'),
-                    'description' => data_get($contact, 'description'),
-                    'properties' => data_get($contact, 'properties'),
-                ]);
+            $contactAttributes = [
+                'id' => data_get($contact, 'id'),
+                'type' => data_get($contact, 'type'),
+                'value' => data_get($contact, 'value'),
+                'description' => data_get($contact, 'description'),
+                //'properties' => json_encode(data_get($contact, 'properties', '')),
+                'contactable_type' => data_get($contact, 'contactable_type'),
+                'contactable_id' => data_get($contact, 'contactable_id'),
+            ];
+
+            $customer->customerable->contacts()->upsert($contactAttributes, ['id', 'contactable_type', 'contactable_id']);
         }
 
         return response()->json($customer);
