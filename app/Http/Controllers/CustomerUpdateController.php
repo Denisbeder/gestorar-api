@@ -27,7 +27,32 @@ class CustomerUpdateController
         };
 
         $customer->customerable->update($addressAttributes);
+        $this->deleteAddressesContacts($customer, $inputs);
+        $this->updateAddressesContacts($customer, $inputs);
 
+        $customer->load(['customerable', 'customerable.addresses', 'customerable.contacts']);
+
+        return response()->json($customer);
+    }
+
+    private function deleteAddressesContacts(Customer $customer, array $inputs): void
+    {
+        $addressesIds = array_filter(data_get($inputs, 'addresses.*.id'));
+        $contactsIds = array_filter(data_get($inputs, 'contacts.*.id'));
+
+        $customer->customerable
+            ->addresses()
+            ->whereNotIn('id', $addressesIds)
+            ->delete();
+
+        $customer->customerable
+            ->contacts()
+            ->whereNotIn('id', $contactsIds)
+            ->delete();
+    }
+
+    private function updateAddressesContacts(Customer $customer, array $inputs): void
+    {
         foreach (data_get($inputs, 'addresses') as $address) {
             $addressAttributes = [
                 'id' => data_get($address, 'id'),
@@ -43,7 +68,7 @@ class CustomerUpdateController
                 'addressable_id' => data_get($address, 'addressable_id'),
             ];
 
-            $customer->customerable->addresses()->upsert($addressAttributes, $addressAttributes);
+            $customer->customerable->addresses()->upsert($addressAttributes, 'id');
         }
 
         foreach (data_get($inputs, 'contacts') as $contact) {
@@ -57,9 +82,7 @@ class CustomerUpdateController
                 'contactable_id' => data_get($contact, 'contactable_id'),
             ];
 
-            $customer->customerable->contacts()->upsert($contactAttributes, ['id', 'contactable_type', 'contactable_id']);
+            $customer->customerable->contacts()->upsert($contactAttributes, 'id');
         }
-
-        return response()->json($customer);
     }
 }
