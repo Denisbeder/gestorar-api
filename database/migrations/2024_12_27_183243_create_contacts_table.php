@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->morphs('contactable');
-            $table->enum('type', ['email', 'phone']);
+            $table->enum('type', ['text', 'email', 'phone']);
             $table->string('value');
             $table->string('description')->nullable();
             $table->json('properties')->nullable();
