@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use App\Contract\CustomerContract;
 use App\Enums\CustomerTypeEnum;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerStoreRequest;
 use App\Models\Customer;
 use App\Models\Organization;
