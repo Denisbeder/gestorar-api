@@ -37,6 +37,13 @@ class Customer extends Model
     {
         return Attribute::get(function () {
             return $this->customerable->name ?? "{$this->customerable->first_name} {$this->customerable->last_name}";
-        });
+        })->shouldCache();
+    }
+
+    public function documentId(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->customerable->cnpj ?? $this->customerable->cpf;
+        })->shouldCache();
     }
 }

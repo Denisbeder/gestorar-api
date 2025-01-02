@@ -12,7 +12,7 @@ class CustomerIndexController
         $customer = Customer::query()
             ->with('customerable')
             ->paginate()
-            ->through(fn (Customer $customer) => $customer->append('name'));
+            ->through(fn (Customer $customer) => $customer->append('name', 'document_id'));
 
         return response()->json($customer);
     }
