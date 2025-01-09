@@ -11,6 +11,7 @@ class CustomerIndexController
     {
         $customer = Customer::query()
             ->with('customerable')
+            ->latest()
             ->paginate()
             ->through(fn (Customer $customer) => $customer->append('name', 'document_id'));
 
