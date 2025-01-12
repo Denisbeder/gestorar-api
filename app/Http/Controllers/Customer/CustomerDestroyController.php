@@ -10,6 +10,7 @@ class CustomerDestroyController
 {
     public function __invoke(Customer $customer, Request $request): Response
     {
+        sleep(3);
         $customer->delete();
 
         return response()->noContent();

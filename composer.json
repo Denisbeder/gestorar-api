@@ -1,11 +1,11 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "duek.digital/gestorar-api",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "API to manage the customers and work orders.",
     "keywords": [
-        "laravel",
-        "framework"
+        "gestorar-api",
+        "gestor"
     ],
     "license": "MIT",
     "require": {
