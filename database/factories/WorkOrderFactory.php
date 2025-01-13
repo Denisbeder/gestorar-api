@@ -42,7 +42,19 @@ class WorkOrderFactory extends Factory
             'completed_at' => null,
         ];
 
-        $extraData = match ($status) {
+        $extraData = [
+            'extra' => fake()->randomFloat(2, 0, 10),
+            'extra_description' => fake()->sentence(),
+        ];
+
+        $discountData = [
+            'discount' => fake()->randomFloat(2, 0, 10),
+            'discount_description' => fake()->sentence(),
+        ];
+
+        $extraDiscountData = fake()->randomElement([[], $extraData, $discountData, [...$extraData, ...$discountData]]);
+
+        $statusData = match ($status) {
             WorkOrderStatusEnum::CANCELLED->value => [
                 'cancelled_at' => $date->copy()->addDays($randomAddNumber),
             ],
@@ -63,6 +75,6 @@ class WorkOrderFactory extends Factory
             default => [],
         };
 
-        return array_merge($data, $extraData);
+        return array_merge($data, $statusData, $extraDiscountData);
     }
 }
