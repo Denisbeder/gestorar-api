@@ -63,6 +63,12 @@ class WorkOrderFactory extends Factory
                 'approved_at' => $date->copy()->addDays($randomAddNumber),
                 'completed_at' => $date->copy()->addDays($randomAddNumber + fake()->numberBetween(0, 2)),
             ],
+            WorkOrderStatusEnum::PAID->value => [
+                'read_at' => $date->copy()->addMinutes($randomAddNumber),
+                'approved_at' => $date->copy()->addDays($randomAddNumber),
+                'completed_at' => $date->copy()->addDays($randomAddNumber + 1),
+                'paid_at' => $date->copy()->addDays($randomAddNumber + fake()->numberBetween(1, 2)),
+            ],
             WorkOrderStatusEnum::DECLINED->value => [
                 'read_at' => $date->copy()->addMinutes($randomAddNumber),
                 'declined_at' => $date->copy()->addDays($randomAddNumber),

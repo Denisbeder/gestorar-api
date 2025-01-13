@@ -11,4 +11,5 @@ enum WorkOrderStatusEnum: string
     case DECLINED = 'declined';
     case CANCELLED = 'cancelled';
     case COMPLETED = 'completed';
+    case PAID = 'paid';
 }

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Customer::class)->nullable()->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('code');
-            $table->enum('status', ['pending', 'expired', 'in_progress', 'approved', 'declined', 'cancelled', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'expired', 'in_progress', 'approved', 'declined', 'cancelled', 'completed', 'paid'])->default('pending');
             $table->date('date');
             $table->date('validity')->nullable();
             $table->decimal('extra', 10, 2)->default(0);
@@ -29,6 +29,7 @@ return new class extends Migration
             $table->timestamp('declined_at')->nullable();
             $table->timestamp('cancelled_at')->nullable();
             $table->timestamp('completed_at')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }

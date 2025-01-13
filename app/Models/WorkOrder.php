@@ -25,12 +25,13 @@ class WorkOrder extends Model
         'discount_description',
         'services',
         'attachments',
+        'sent_at',
+        'read_at',
         'approved_at',
         'declined_at',
         'cancelled_at',
         'completed_at',
-        'sent_at',
-        'read_at',
+        'paid_at',
     ];
 
     protected function casts(): array
@@ -43,12 +44,13 @@ class WorkOrder extends Model
             'discount' => 'decimal',
             'services' => 'collection',
             'attachments' => 'collection',
+            'sent_at' => 'datetime',
+            'read_at' => 'datetime',
             'approved_at' => 'datetime',
             'declined_at' => 'datetime',
             'cancelled_at' => 'datetime',
             'completed_at' => 'datetime',
-            'sent_at' => 'datetime',
-            'read_at' => 'datetime',
+            'paid_at' => 'datetime',
         ];
     }
 
