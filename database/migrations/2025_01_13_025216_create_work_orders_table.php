@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('extra_description')->nullable();
             $table->string('discount_description')->nullable();
             $table->json('services');
+            $table->json('attachments')->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamp('approved_at')->nullable();
