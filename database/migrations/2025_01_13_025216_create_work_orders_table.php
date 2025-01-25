@@ -16,11 +16,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'expired', 'in_progress', 'approved', 'declined', 'cancelled', 'completed', 'paid'])->default('pending');
             $table->date('date');
             $table->date('validity')->nullable();
-            $table->decimal('extra', 10, 2)->default(0);
-            $table->decimal('discount', 10, 2)->default(0);
             $table->longText('description')->nullable();
-            $table->string('extra_description')->nullable();
-            $table->string('discount_description')->nullable();
             $table->json('services');
             $table->json('attachments')->nullable();
             $table->timestamp('sent_at')->nullable();
